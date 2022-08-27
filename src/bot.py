@@ -94,7 +94,7 @@ BOTTTSENABLED = os.getenv('BOTTTSENABLED').lower() in ['true', '1', 't', 'y', 'y
 BOTTTSCHANNEL = os.getenv('BOTTTSCHANNEL').replace("'", "").replace('"', '')
 
 #Reaction Monitor ENV Variables
-ID_Message_ReactionMonitor = int(os.getenv('ID_MESSAGE_REACTIONMONITOR'))
+ID_MESSAGE_REACTIONMONITOR = int(os.getenv('ID_MESSAGE_REACTIONMONITOR'))
 
 if os.environ.get('ROLE_REACTIONMONITOR') is not None: #27AUG22
     ROLE_ReactionMonitor = os.getenv('ROLE_REACTIONMONITOR').replace("'", "").replace('"', '')
@@ -817,7 +817,7 @@ async def on_ready():
     
     #React to the Alumni Message on bot start
     tChannel = bot.get_channel(ID_Channel_ReactionMonitor)
-    tMessage = await tChannel.fetch_message(ID_Message_ReactionMonitor)
+    tMessage = await tChannel.fetch_message(ID_MESSAGE_REACTIONMONITOR)
     await tMessage.add_reaction('🤖')
 
     #Start the task to remove the active Commentator Role
@@ -837,7 +837,7 @@ async def on_raw_reaction_add(payload):
         return
 
     # If a user adds a reaction to the specific Message then add the Alumni Role
-    if payload.message_id == int(ID_Message_ReactionMonitor):
+    if payload.message_id == int(ID_MESSAGE_REACTIONMONITOR):
         if ROLE_NEWUSER.lower() not in [y.name.lower() for y in payload.member.roles]:
             if str(payload.emoji) == '🤖':
                 if ROLE_ReactionMonitor.lower() not in [y.name.lower() for y in payload.member.roles]:
