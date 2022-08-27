@@ -2,6 +2,10 @@
 
 All notable changes to the project will be documented in this file.
 
+## [2.3.25] - 27AUG22
+### Changed
+- Corrected environment variable name in bot.py to be consistantly uppercase
+
 ## [2.3.24] - 27AUG22
 ### Changed
 - Environment variables to be consistantly uppercase

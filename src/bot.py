@@ -36,14 +36,14 @@ from mysql.connector import Error
 
 
 #25AUG22 - Get logging level from variable
-chsLOGLEVEL =  os.environ.get('LOGLEVEL', 'INFO').upper()
+CHSLOGLEVEL =  os.environ.get('CHSLOGLEVEL', 'INFO').upper()
 
 #Create cache file so we don't make unnecessary calls to the APIs 
 requests_cache.install_cache('FIRSTChesapeakeBot_cache', backend='sqlite', expire_after=(datetime.timedelta(days=3)))
 
 #Start logging
 logger = logging.getLogger('FIRSTChesapeakeBot')
-logger.setLevel(level=chsLOGLEVEL) #25AUG22 - Updated to use LOGLEVEL variable
+logger.setLevel(level=CHSLOGLEVEL) #25AUG22 - Updated to use LOGLEVEL variable | 27AUG22 - Using correct variable name
 
 #23JAN22 - Output to stdout
 sh = logging.StreamHandler(sys.stdout)
@@ -55,13 +55,13 @@ logger.addHandler(sh)
 chsLOGFOLDER = os.path.join(os.environ.get('CHSLOGFOLDER', '/var/log'), '') # https://stackoverflow.com/questions/2736144/python-add-trailing-slash-to-directory-string-os-independently
 
 #25AUG22 - Added LOGNAME Variable
-chsLOGNAME = os.environ.get('LOGNAME', 'FIRSTChesapeakeDiscordBot.log')
+CHSLOGNAME = os.environ.get('CHSLOGNAME', 'FIRSTChesapeakeDiscordBot.log')
 
 if not os.path.exists(chsLOGFOLDER):
     os.makedirs(chsLOGFOLDER)
 
-fh = logging.FileHandler(chsLOGFOLDER+chsLOGNAME)
-fh.setLevel(level=chsLOGLEVEL) #25AUG22 - Updated to use LOGLEVEL variable
+fh = logging.FileHandler(chsLOGFOLDER+CHSLOGNAME)
+fh.setLevel(level=CHSLOGLEVEL) #25AUG22 - Updated to use LOGLEVEL variable
 
 formatter = logging.Formatter('%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
 fh.setFormatter(formatter)
