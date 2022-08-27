@@ -8,7 +8,7 @@ on:
       [ v2 ]
     paths:
     - '**'
-    - '.github/workflows/firstchesapeakediscordbot-AutoDeployTrigger-e6db11f1-ac5e-4697-a70e-59fb68b17438.yml'
+    - '.github/workflows/firstchesapeakediscordbot.yml'
 
   # Allow mannually trigger 
   workflow_dispatch:
@@ -98,7 +98,7 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.FIRSTCHESAPEAKEDISCORDBOT_AZURE_CREDENTIALS }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Lowercase Github Repository Name
         id: lowerGITHUB_REPOSITORY
