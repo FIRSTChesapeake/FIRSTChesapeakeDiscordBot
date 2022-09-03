@@ -95,11 +95,6 @@ jobs:
     environment: production
 
     steps:
-      - name: Azure Login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
       - name: Lowercase Github Repository Name
         id: lowerGITHUB_REPOSITORY
         uses: ASzc/change-string-case-action@v2
@@ -112,13 +107,13 @@ jobs:
         with:
           string: ${{ github.event.repository.name }}
 
-    - name: executing remote ssh commands using password
-      uses: appleboy/ssh-action@master
-      env:
-        REPO: ${{ github.event.repository.name }}
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USER }}
-        key: ${{ secrets.SSH_KEY }}
-        port: ${{ secrets.SSH_PORT }}
-        script: sudo /root/deploy.sh --container-name=${REPO}
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        env:
+          REPO: ${{ github.event.repository.name }}
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: sudo /root/deploy.sh --container-name=${REPO}
