@@ -117,4 +117,5 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          envs: REPO
           script: sudo /root/deploy.sh --container-name=${REPO}
