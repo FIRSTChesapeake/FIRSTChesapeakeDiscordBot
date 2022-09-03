@@ -2,6 +2,10 @@
 
 All notable changes to the project will be documented in this file.
 
+## [2.3.27] - 3SEP22
+### Changed
+- Workflow to deploy to Ubuntu VM instead of Azure
+
 ## [2.3.26] - 27AUG22
 ### Changed
 - More consistant uppercase variable names
