@@ -2,17 +2,10 @@
 
 All notable changes to the project will be documented in this file.
 
-## [2.3.27] - 3SEP22
-### Changed
-- Workflow to deploy to Ubuntu VM instead of Azure
-
-## [2.3.26] - 27AUG22
-### Changed
-- More consistant uppercase variable names
-
-## [2.3.25] - 27AUG22
-### Changed
-- Corrected environment variable name in bot.py to be consistantly uppercase
+## [23.1.0] - 01OCT22
+### Added
+- 23 Branch for 2023 specific changes
+- nuke command to remove all, but pinned, messages from a channel.
 
 ## [2.3.24] - 27AUG22
 ### Changed

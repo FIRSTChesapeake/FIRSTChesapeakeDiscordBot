@@ -36,14 +36,14 @@ from mysql.connector import Error
 
 
 #25AUG22 - Get logging level from variable
-CHSLOGLEVEL =  os.environ.get('CHSLOGLEVEL', 'INFO').upper()
+chsLOGLEVEL =  os.environ.get('LOGLEVEL', 'INFO').upper()
 
 #Create cache file so we don't make unnecessary calls to the APIs 
 requests_cache.install_cache('FIRSTChesapeakeBot_cache', backend='sqlite', expire_after=(datetime.timedelta(days=3)))
 
 #Start logging
 logger = logging.getLogger('FIRSTChesapeakeBot')
-logger.setLevel(level=CHSLOGLEVEL) #25AUG22 - Updated to use LOGLEVEL variable | 27AUG22 - Using correct variable name
+logger.setLevel(level=chsLOGLEVEL) #25AUG22 - Updated to use LOGLEVEL variable
 
 #23JAN22 - Output to stdout
 sh = logging.StreamHandler(sys.stdout)
@@ -55,13 +55,13 @@ logger.addHandler(sh)
 chsLOGFOLDER = os.path.join(os.environ.get('CHSLOGFOLDER', '/var/log'), '') # https://stackoverflow.com/questions/2736144/python-add-trailing-slash-to-directory-string-os-independently
 
 #25AUG22 - Added LOGNAME Variable
-CHSLOGNAME = os.environ.get('CHSLOGNAME', 'FIRSTChesapeakeDiscordBot.log')
+chsLOGNAME = os.environ.get('LOGNAME', 'FIRSTChesapeakeDiscordBot.log')
 
 if not os.path.exists(chsLOGFOLDER):
     os.makedirs(chsLOGFOLDER)
 
-fh = logging.FileHandler(chsLOGFOLDER+CHSLOGNAME)
-fh.setLevel(level=CHSLOGLEVEL) #25AUG22 - Updated to use LOGLEVEL variable
+fh = logging.FileHandler(chsLOGFOLDER+chsLOGNAME)
+fh.setLevel(level=chsLOGLEVEL) #25AUG22 - Updated to use LOGLEVEL variable
 
 formatter = logging.Formatter('%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
 fh.setFormatter(formatter)
@@ -94,7 +94,7 @@ BOTTTSENABLED = os.getenv('BOTTTSENABLED').lower() in ['true', '1', 't', 'y', 'y
 BOTTTSCHANNEL = os.getenv('BOTTTSCHANNEL').replace("'", "").replace('"', '')
 
 #Reaction Monitor ENV Variables
-ID_MESSAGE_REACTIONMONITOR = int(os.getenv('ID_MESSAGE_REACTIONMONITOR'))
+ID_Message_ReactionMonitor = int(os.getenv('ID_MESSAGE_REACTIONMONITOR'))
 
 if os.environ.get('ROLE_REACTIONMONITOR') is not None: #27AUG22
     ROLE_ReactionMonitor = os.getenv('ROLE_REACTIONMONITOR').replace("'", "").replace('"', '')
@@ -771,8 +771,15 @@ async def clear(ctx, amount: int):
     
     # Check from https://stackoverflow.com/questions/53643906/discord-py-delete-all-messages-except-pin-messages
     await ctx.channel.purge(limit=amount + 1, check=lambda msg: not msg.pinned)
-        
-        
+
+@commands.has_permissions(manage_messages=True) 
+#only those with the permission to manage messages can use this command
+async def nuke(ctx):
+    logger.warning(ctx.message.author.display_name + " has requested the removal of all messages in channel " + ctx.message.channel.name)
+    
+    # Check from https://stackoverflow.com/questions/53643906/discord-py-delete-all-messages-except-pin-messages
+    await ctx.channel.purge(limit=None, check=lambda msg: not msg.pinned)
+
 # ===== END COMMANDS SECTION =====
 
 # ===== START BOT EVENT SECTION ===== 
@@ -817,7 +824,7 @@ async def on_ready():
     
     #React to the Alumni Message on bot start
     tChannel = bot.get_channel(ID_Channel_ReactionMonitor)
-    tMessage = await tChannel.fetch_message(ID_MESSAGE_REACTIONMONITOR)
+    tMessage = await tChannel.fetch_message(ID_Message_ReactionMonitor)
     await tMessage.add_reaction('🤖')
 
     #Start the task to remove the active Commentator Role
@@ -837,7 +844,7 @@ async def on_raw_reaction_add(payload):
         return
 
     # If a user adds a reaction to the specific Message then add the Alumni Role
-    if payload.message_id == int(ID_MESSAGE_REACTIONMONITOR):
+    if payload.message_id == int(ID_Message_ReactionMonitor):
         if ROLE_NEWUSER.lower() not in [y.name.lower() for y in payload.member.roles]:
             if str(payload.emoji) == '🤖':
                 if ROLE_ReactionMonitor.lower() not in [y.name.lower() for y in payload.member.roles]:
