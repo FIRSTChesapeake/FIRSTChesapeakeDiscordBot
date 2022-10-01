@@ -118,6 +118,7 @@ ID_Channel_Voice_CommentatorLive = int(os.getenv('ID_CHANNEL_VOICE_COMMENTATORLI
 # Get master variables to disable portions of the bot if desired
 bool_FTCEVENTSSERVER = os.getenv('BOOL_FTCEVENTSSERVER').lower() in ['true', '1', 't', 'y', 'yes', 'yeah', 'yup', 'certainly', 'uh-huh']
 
+BOTVERSION = os.getenv('BOTVERSION')
 
 intents = discord.Intents(
     message_content=True, #25AUG22 - Required with Discord.py v2
@@ -364,6 +365,18 @@ async def highscore(ctx):
                 embedVar.add_field(name="Blue Alliance", value=(str(row["matchBrief_blue_team1"]) + " - " + evnt.teams[row["matchBrief_blue_team1"]].name + "\n" + str(row["matchBrief_blue_team2"]) + " - " + evnt.teams[row["matchBrief_blue_team2"]].name), inline=False)
 
                 await ctx.send(embed=embedVar)
+
+#RW - 1OCT21 - Added Version Command
+@bot.command(name="version", aliases=['ver', 'v'])
+async def version(ctx):
+    logger.debug("[version] " + ctx.message.author.display_name + " attempting to run command.")
+    logger.debug("[version] ROLE_ADMINISTRATOR: " + ROLE_ADMINISTRATOR.lower())
+    for y in ctx.message.author.roles:
+        logger.debug("[version] " + ctx.message.author.display_name + " role: " + y.name.lower())
+
+    if ROLE_ADMINISTRATOR.lower() in [y.name.lower() for y in ctx.message.author.roles]:
+        logger.info(ctx.message.author.display_name + " ran command " + ctx.message.content)
+        await ctx.send("Bot is running version " + BOTVERSION)
 
 #KLT - 30NOV21 2058 - Added Ping Command
 @bot.command(name="ping")
@@ -772,7 +785,6 @@ async def clear(ctx, amount: int):
     # Check from https://stackoverflow.com/questions/53643906/discord-py-delete-all-messages-except-pin-messages
     await ctx.channel.purge(limit=amount + 1, check=lambda msg: not msg.pinned)
 
-@bot.command(name="nuke", pass_context = True)
 @commands.has_permissions(manage_messages=True) 
 #only those with the permission to manage messages can use this command
 async def nuke(ctx):

@@ -2,6 +2,13 @@
 
 All notable changes to the project will be documented in this file.
 
+## [23.1.2] - 01OCT22
+### Added
+- Version command to see what version the bot is
+
+### Changed
+- Dockerfile to set version number to Environment Variable automatically
+
 ## [23.1.1] - 01OCT22
 ### Changed
 - nuke command to be an actual command...
