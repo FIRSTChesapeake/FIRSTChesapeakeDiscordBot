@@ -772,6 +772,7 @@ async def clear(ctx, amount: int):
     # Check from https://stackoverflow.com/questions/53643906/discord-py-delete-all-messages-except-pin-messages
     await ctx.channel.purge(limit=amount + 1, check=lambda msg: not msg.pinned)
 
+@bot.command(name="nuke", pass_context = True)
 @commands.has_permissions(manage_messages=True) 
 #only those with the permission to manage messages can use this command
 async def nuke(ctx):
