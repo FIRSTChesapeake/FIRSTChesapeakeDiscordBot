@@ -1,8 +1,7 @@
 # BUILD ENV
 FROM python:3.9.14-slim-buster
 
-ARG BOTVERSION="23.1.3"
-ENV BOTVERSION=${BOTVERSION}
+ARG BOTVERSION="23.1.4"
 LABEL version=${BOTVERSION}
 #LABEL version="23.1.1"
 LABEL description="Docker Image of the FIRST Chesapeake Discord Bot."
@@ -24,6 +23,8 @@ RUN pip install -r requirements.txt
 
 # Copy the script source files to the WORKDIR
 COPY src/ .
+
+ENV BOTVERSION=${BOTVERSION}
 
 # Configure the volume for logging
 VOLUME ["/var/log/firstchesapeakediscordbot"]

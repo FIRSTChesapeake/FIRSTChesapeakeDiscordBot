@@ -366,13 +366,11 @@ async def highscore(ctx):
 
                 await ctx.send(embed=embedVar)
 
-#RW - 1OCT21 - Added Version Command
+#RW - 1OCT22 - Added Version Command
 @bot.command(name="version", aliases=['ver', 'v'])
 async def version(ctx):
     logger.debug("[version] " + ctx.message.author.display_name + " attempting to run command.")
     logger.debug("[version] ROLE_ADMINISTRATOR: " + ROLE_ADMINISTRATOR.lower())
-    for y in ctx.message.author.roles:
-        logger.debug("[version] " + ctx.message.author.display_name + " role: " + y.name.lower())
 
     if ROLE_ADMINISTRATOR.lower() in [y.name.lower() for y in ctx.message.author.roles]:
         logger.info(ctx.message.author.display_name + " ran command " + ctx.message.content)
@@ -776,7 +774,7 @@ async def server(ctx, verb: str, noun: str):
         logger.warning(ctx.message.author.display_name + " attempted to invoke the FTC SERVER Command on server " + ctx.guild.name + "! Command provided: " + ctx.message.content)
 
 #The following code is from https://stackoverflow.com/questions/60643592/how-to-delete-all-messages-from-a-channel-with-discord-bot
-@bot.command(pass_context = True , aliases=['purge', 'clean', 'delete', 'sweep'])
+@bot.command(aliases=['purge', 'clean', 'delete', 'sweep'])
 @commands.has_permissions(manage_messages=True) 
 #only those with the permission to manage messages can use this command
 async def clear(ctx, amount: int):
@@ -785,7 +783,7 @@ async def clear(ctx, amount: int):
     # Check from https://stackoverflow.com/questions/53643906/discord-py-delete-all-messages-except-pin-messages
     await ctx.channel.purge(limit=amount + 1, check=lambda msg: not msg.pinned)
 
-@bot.command(name="nuke", pass_context = True)
+@bot.command(name="nuke")
 @commands.has_permissions(manage_messages=True) 
 #only those with the permission to manage messages can use this command
 async def nuke(ctx):

@@ -2,6 +2,10 @@
 
 All notable changes to the project will be documented in this file.
 
+## [23.1.4] - 01OCT22
+### Changed
+- Actions to wait 10 seconds before starting and to use the SHA of the commit for the pull.
+
 ## [23.1.3] - 01OCT22
 ### Changed
 - nuke command to be an actual command... again...
