@@ -2,6 +2,11 @@
 
 All notable changes to the project will be documented in this file.
 
+## [23.1.3] - 01OCT22
+### Changed
+- nuke command to be an actual command... again...
+- Updated Requirements
+
 ## [23.1.2] - 01OCT22
 ### Added
 - Version command to see what version the bot is

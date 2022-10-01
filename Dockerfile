@@ -1,7 +1,7 @@
 # BUILD ENV
-FROM python:3.9.13-slim-buster
+FROM python:3.9.14-slim-buster
 
-ARG BOTVERSION="23.1.2"
+ARG BOTVERSION="23.1.3"
 ENV BOTVERSION=${BOTVERSION}
 LABEL version=${BOTVERSION}
 #LABEL version="23.1.1"
